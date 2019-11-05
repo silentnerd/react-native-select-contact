@@ -1,18 +1,16 @@
-# react-native-select-contact
+# react-native-contact
 
-Originally branched from [react-native-contacts-wrapper](https://github.com/LynxITDigital/react-native-contacts-wrapper)
-
-This is a simple wrapper for the native iOS and Android Contact Picker UIs, with some optional help for selecting specific fields from the contact.
+This is simple wrapper that return an array of contacts which can be handled by the developer for their specific use.
 
 ### Installation
 
 ```
-yarn add react-native-select-contact
+yarn add react-native-contact
 ```
 
 For React Native => 0.59 only:
 ```
-react-native link react-native-select-contact
+react-native link react-native-contact
 ```
 
 Make sure your manifest files includes permission to read contacts
@@ -31,25 +29,7 @@ selectContactEmail(): Promise<ContactEmailSelection | null>;
 selectContactPostalAddress(): Promise<ContactPostalAddressSelection | null>;
 ```
 
-These methods all open up a separate ViewController (on IOS) or Activity (on Android) to select a contact.  See Types below.
-
-For `selectContactPhone`, `selectContactEmail`, or `selectContactPostalAddress`, if there are more than one phone or email, an `ActionSheetIOS` is
-shown for IOS, and the first entry is returned for Android.
-
-A return value `null` may be because the user cancelled the contact selection.  You shouldn't need to worry about doing
-anything if the promise resolves to `null`.
-
-#### Optional Android ActionSheet
-
-You can enable ActionSheet functionality for Android by installing an optional dependency:
-
-```
-yarn add @yfuks/react-native-action-sheet
-./node_modules/.bin/react-native link @yfuks/react-native-action-sheet 
-```
-
-This will provide an `ActionSheetAndroid` native module that this library will pick up on and use
-when there are more than one phone number or email on a selected contact.
+These methods all will return an array. Which in turn can be handled by the developer for their specific need.
 
 #### Types
 
@@ -101,7 +81,7 @@ interface ContactPostalAddressSelection {
 
 ```javascript
 
-import { selectContactPhone } from 'react-native-select-contact';
+import { selectContactPhone } from 'react-native-contact';
 
 function getPhoneNumber() {
     return selectContactPhone()
@@ -109,10 +89,8 @@ function getPhoneNumber() {
             if (!selection) {
                 return null;
             }
-            
-            let { contact, selectedPhone } = selection;
-            console.log(`Selected ${selectedPhone.type} phone number ${selectedPhone.number} from ${contact.name}`);
-            return selectedPhone.number;
+     
+            console.log('Contact phone numbers: '+selection);
         });  
 }
 
