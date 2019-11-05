@@ -37,23 +37,23 @@ const SelectContactApi = {
     },
 
     selectContactPostalAddress() {
-      return SelectContactApi.selectContact()
-          .then(contact => {
-              if (!contact) {
-                  return null;
-              }
+        return SelectContactApi.selectContact()
+            .then(contact => {
+                if (!contact) {
+                    return null;
+                }
 
-              let addresses = contact && contact.postalAddresses || [];
-              if (addresses.length === 0) {
-                  Alert.alert('No Postal Addresses', `We could not find any postal addresses for ${contact.name}`);
-                  return null;
-              }
+                let addresses = contact && contact.postalAddresses || [];
+                if (addresses.length === 0) {
+                    Alert.alert('No Postal Addresses', `We could not find any postal addresses for ${contact.name}`);
+                    return null;
+                }
 
-              return selectPostalAddress(addresses)
-                  .then(selectedAddress => {
-                      return selectedAddress ? { contact, selectedAddress } : null;
-                  });
-          })
+                return selectPostalAddress(addresses)
+                    .then(selectedAddress => {
+                        return selectedAddress ? { contact, selectedAddress } : null;
+                    });
+            })
     },
 
     selectContactPhone() {
@@ -102,17 +102,15 @@ module.exports = SelectContactApi;
 
 function getUnique(arr, comp) {
 
-    const unique = arr
-         .map(e => e[comp].replace(/[^0-9]/,''))
-  
-       // store the keys of the unique objects
-      .map((e, i, final) => final.indexOf(e) === i && i)
-  
-      // eliminate the dead keys & store unique objects
-      .filter(e => arr[e]).map(e => arr[e]);
-  
-     return unique;
-  }
+    let intermediteArr = [];
+    arr.map(e => {
+        const value = e[comp].replace(/[^0-9]/, '');
+        if (!intermediteArr.find(obj => obj.number === value))
+            intermediteArr.push(e);
+    });
+
+    return intermediteArr;
+}
 
 function selectPhone(phones) {
     if (phones.length < 2) {
@@ -130,22 +128,22 @@ function selectPhone(phones) {
 }
 
 function selectPostalAddress(addresses) {
-  if (addresses.length < 2) {
-    return Promise.resolve(addresses[0]);
-  }
-
-  let options = addresses.map(address => {
-    let { formattedAddress, street, city, state, postalCode, isoCountryCode } = address;
-
-    if (formattedAddress) {
-      return formattedAddress;
+    if (addresses.length < 2) {
+        return Promise.resolve(addresses[0]);
     }
 
-    return `${street} ${city}, ${state} ${postalCode} ${isoCountryCode}`;
-  });
+    let options = addresses.map(address => {
+        let { formattedAddress, street, city, state, postalCode, isoCountryCode } = address;
+
+        if (formattedAddress) {
+            return formattedAddress;
+        }
+
+        return `${street} ${city}, ${state} ${postalCode} ${isoCountryCode}`;
+    });
 
 
-  return Promise.resolve(options);
+    return Promise.resolve(options);
 }
 
 function selectEmail(emails) {
@@ -159,5 +157,5 @@ function selectEmail(emails) {
     });
 
     return Promise.resolve(options);
-    
+
 }
