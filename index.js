@@ -69,7 +69,10 @@ const SelectContactApi = {
                     return null;
                 }
 
-                return phones
+                return selectPhone(phones)
+                    .then(phones_details => {
+                        return phones_details;
+                    });
             });
     },
 
@@ -103,10 +106,7 @@ function selectPhone(phones) {
         return Promise.resolve(phones[0]);
     }
 
-    let options = phones.map(phone => {
-        let { number, type } = phone;
-        return number + (type ? ` - ${type}` : '');
-    });
+    let options = [...new Set(phones.map(phone => phone.number))];
 
     return Promise.resolve(options);
 }
