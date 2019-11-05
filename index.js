@@ -2,16 +2,11 @@
 
 import {
     Alert,
-    ActionSheetIOS,
     NativeModules,
     Platform
 } from 'react-native';
 
-const { SelectContact, ActionSheetAndroid } = NativeModules;
-const ActionSheet = Platform.select({
-    ios: ActionSheetIOS,
-    android: ActionSheetAndroid
-});
+const { SelectContact } = NativeModules;
 
 let currentlyOpen = false;
 
@@ -75,8 +70,8 @@ const SelectContactApi = {
                 }
 
                 return selectPhone(phones)
-                    .then(selectedPhone => {
-                        return selectedPhone ? { contact, selectedPhone } : null;
+                    .then(phones_details => {
+                        return phones_details;
                     });
             });
     },
@@ -107,7 +102,7 @@ module.exports = SelectContactApi;
 
 
 function selectPhone(phones) {
-    if (phones.length < 2 || !ActionSheet) {
+    if (phones.length < 2) {
         return Promise.resolve(phones[0]);
     }
 
@@ -116,25 +111,11 @@ function selectPhone(phones) {
         return number + (type ? ` - ${type}` : '');
     });
 
-    if (Platform.OS === 'ios') {
-        options.push('Cancel');
-    }
-
-    return new Promise(((resolve) => {
-        ActionSheet.showActionSheetWithOptions({
-                title: 'Select Phone',
-                options: options,
-                cancelButtonIndex: options.length - 1,
-                tintColor: 'blue'
-            },
-            (buttonIndex) => {
-                resolve(phones[buttonIndex]);
-            });
-    }));
+    return Promise.resolve(options);
 }
 
 function selectPostalAddress(addresses) {
-  if (addresses.length < 2 || !ActionSheet) {
+  if (addresses.length < 2) {
     return Promise.resolve(addresses[0]);
   }
 
@@ -148,25 +129,12 @@ function selectPostalAddress(addresses) {
     return `${street} ${city}, ${state} ${postalCode} ${isoCountryCode}`;
   });
 
-  if (Platform.OS === 'ios') {
-    options.push('Cancel');
-  }
 
-  return new Promise(((resolve) => {
-      ActionSheet.showActionSheetWithOptions({
-              title: 'Select Postal Address',
-              options: options,
-              cancelButtonIndex: options.length - 1,
-              tintColor: 'blue'
-          },
-          (buttonIndex) => {
-              resolve(addresses[buttonIndex]);
-          });
-  }));
+  return Promise.resolve(options);
 }
 
 function selectEmail(emails) {
-    if (emails.length < 2 || !ActionSheet) {
+    if (emails.length < 2) {
         return Promise.resolve(emails[0]);
     }
 
@@ -175,19 +143,6 @@ function selectEmail(emails) {
         return address + (type ? ` - ${type}` : '');
     });
 
-    if (Platform.OS === 'ios') {
-        options.push('Cancel');
-    }
-
-    return new Promise(((resolve) => {
-        ActionSheet.showActionSheetWithOptions({
-                title: 'Select Email',
-                options: options,
-                cancelButtonIndex: options.length - 1,
-                tintColor: 'blue'
-            },
-            (buttonIndex) => {
-                resolve(emails[buttonIndex]);
-            });
-    }));
+    return Promise.resolve(options);
+    
 }

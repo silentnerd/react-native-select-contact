@@ -1,6 +1,6 @@
 {
-  "name": "react-native-select-contact",
-  "version": "1.2.1",
+  "name": "react-native-contact",
+  "version": "0.0.1",
   "nativePackage": true,
   "typings": "./selectContact.d.ts",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/streem/react-native-select-contact.git"
+    "url": "git+https://github.com/silentnerd/react-native-select-contact.git"
   },
   "keywords": [
     "react",
@@ -19,16 +19,16 @@
     "select contact"
   ],
   "author": {
-    "name": "Streem (originally LynxIT iDigital)"
+    "name": "Sujeban Elankeswaran"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/streem/react-native-select-contact/issues"
+    "url": "https://github.com/silentnerd/react-native-select-contact.git/issues"
   },
-  "homepage": "https://github.com/streem/react-native-select-contact",
+  "homepage": "https://github.com/silentnerd/react-native-select-contact.git",
   "maintainers": [
     {
-      "name": "Sean Adkinson"
+      "name": "Sujeban Elankeswaran"
     }
   ],
   "peerDependencies": {
@@ -36,8 +36,5 @@
   },
   "devDependencies": {
     "react-native": ">=0.51.0"
-  },
-  "optionalDependencies": {
-    "@yfuks/react-native-action-sheet": "^0.0.4"
   }
 }
