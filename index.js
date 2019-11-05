@@ -104,9 +104,11 @@ function getUnique(arr, comp) {
 
     let intermediteArr = [];
     arr.map(e => {
-        const value = e[comp].replace(/[^0-9]/, '');
-        if (!intermediteArr.find(obj => obj.number === value))
+        const value = e[comp].replace(/[^0-9]/g, '');
+        if (!intermediteArr.find(obj => obj.number === value)){
+            e.number = value;
             intermediteArr.push(e);
+        }
     });
 
     return intermediteArr;
