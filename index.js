@@ -103,7 +103,7 @@ module.exports = SelectContactApi;
 function getUnique(arr, comp) {
 
     const unique = arr
-         .map(e => e[comp])
+         .map(e => e[comp].replace(/[^0-9]/,''))
   
        // store the keys of the unique objects
       .map((e, i, final) => final.indexOf(e) === i && i)
