@@ -69,10 +69,7 @@ const SelectContactApi = {
                     return null;
                 }
 
-                return selectPhone(phones)
-                    .then(phones_details => {
-                        return phones_details;
-                    });
+                return phones
             });
     },
 
