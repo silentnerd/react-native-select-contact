@@ -119,12 +119,12 @@ function selectPhone(phones) {
         return Promise.resolve(phones[0]);
     }
 
-    let options = phones.map(phone => {
-        let { number, type } = phone;
-        return number + (type ? ` - ${type}` : '');
-    });
+    // let options = phones.map(phone => {
+    //     let { number, type } = phone;
+    //     return number + (type ? ` - ${type}` : '');
+    // });
 
-    let unique = getUnique(options, "number");
+    let unique = getUnique(phones, "number");
 
     return Promise.resolve(unique);
 }
