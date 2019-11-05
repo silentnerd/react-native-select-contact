@@ -100,15 +100,33 @@ const SelectContactApi = {
 
 module.exports = SelectContactApi;
 
+function getUnique(arr, comp) {
+
+    const unique = arr
+         .map(e => e[comp])
+  
+       // store the keys of the unique objects
+      .map((e, i, final) => final.indexOf(e) === i && i)
+  
+      // eliminate the dead keys & store unique objects
+      .filter(e => arr[e]).map(e => arr[e]);
+  
+     return unique;
+  }
 
 function selectPhone(phones) {
     if (phones.length < 2) {
         return Promise.resolve(phones[0]);
     }
 
-    let options = [...new Set(phones.map(phone => phone.number))];
+    let options = phones.map(phone => {
+        let { number, type } = phone;
+        return number + (type ? ` - ${type}` : '');
+    });
 
-    return Promise.resolve(options);
+    let unique = getUnique(options, "number");
+
+    return Promise.resolve(unique);
 }
 
 function selectPostalAddress(addresses) {
